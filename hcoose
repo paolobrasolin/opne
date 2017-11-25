@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+unset options i
+while IFS= read -r line; do
+    options[i++]="$line"
+done
+
+select opt in "${options[@]}" "Stop the script"; do
+    case $opt in
+        "Stop the script")
+            echo "You chose to stop"
+            break
+            ;;
+        *)
+            eval $@ $opt
+            break
+            ;;
+    esac
+done < /dev/tty # Read from terminal
